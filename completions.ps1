@@ -1,7 +1,9 @@
-﻿if ($args[0] -ne $null) {
-    $inputText = $args[0].ToString()
+﻿if (($args.Count -gt 1) -and ($args[1] -ne $null)) {
+    $code = (Get-Content $args[0]) -join "`n"
+    $index = $args[1]
 
-    $completeWords = [System.Management.Automation.CommandCompletion]::CompleteInput($inputText, $inputText.Length, $null).CompletionMatches | Select-Object CompletionText, ResultType, ToolTip
+    $ret = [System.Management.Automation.CommandCompletion]::MapStringInputToParsedInput([String] $code, [Int] $index)
+    $completeWords = [System.Management.Automation.CommandCompletion]::CompleteInput($ret.Item1, $ret.Item2, $ret.Item3, $null).CompletionMatches | Select-Object CompletionText, ResultType, ToolTip
 
     foreach ($completeWord in $completeWords)
     {

@@ -3,10 +3,10 @@ import vim
 import os.path
 
 
-def complete(arg):
+def complete(fname, position):
     p = Popen(["powershell.exe", "-NoLogo", "-NoProfile", "-NonInteractive",
                "-ExecutionPolicy", "RemoteSigned",
-               "-Command", os.path.dirname(__file__) + "\completions.ps1 '" + arg + "'"],
+               "-Command", os.path.dirname(__file__) + "\completions.ps1 '" + fname + "' " + position],
               stdout=PIPE,
               shell=True)
     while 1:

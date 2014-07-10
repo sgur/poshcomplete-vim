@@ -10,7 +10,10 @@ EOF
 endfunction
 
 function! poshcomplete#py_ext#complete(line)
-    python getcandidates.complete(vim.eval("a:line"))
+    let temp = tempname()
+    let bytes = len(join(getline(1, line('.')-1), "\n")) + col('.')
+    call writefile(getline(1, '.'), temp)
+    python getcandidates.complete(vim.eval("temp"), vim.eval("bytes"))
     return []
 endfunction
 
