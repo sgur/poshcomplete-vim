@@ -8,9 +8,9 @@
     foreach ($completeWord in $completeWords)
     {
         Write-Host "{" `
-            ("`"word`": `"" + ($completeWord.CompletionText -replace "\\","\\") + "`", ") `
-            ("`"kind`": `"[" + $completeWord.ResultType + "]`", ") `
-            ("`"menu`": `"" + ($($($completeWord.ToolTip -replace "\\","\\") -replace "^`r`n","") -replace "`r`n"," ") + "`"") `
+            ("`"word`": `"{0}`"," -f ($completeWord.CompletionText -replace "\\","\\")) `
+            ("`"kind`": `"[{0}]`"," -f $completeWord.ResultType) `
+            ("`"menu`": `"{0}`"" -f ((($completeWord.ToolTip -replace "\\","\\") -replace "^`r`n","") -replace "`r`n"," ")) `
             "}"
     }
 }

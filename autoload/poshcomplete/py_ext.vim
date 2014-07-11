@@ -9,11 +9,8 @@ sys.path.remove(scr_path)
 EOF
 endfunction
 
-function! poshcomplete#py_ext#complete(line)
-    let temp = tempname()
-    let bytes = len(join(getline(1, line('.')-1), "\n")) + col('.')
-    call writefile(getline(1, '.'), temp)
-    python getcandidates.complete(vim.eval("temp"), vim.eval("bytes"))
+function! poshcomplete#py_ext#complete(path, index)
+    python getcandidates.complete(vim.eval("a:path"), vim.eval("a:index"))
     return []
 endfunction
 
