@@ -1,6 +1,6 @@
-﻿if (($args.Count -gt 1) -and ($args[1] -ne $null)) {
+﻿if (($args.Count -eq 1) -and ($args[0] -ne $null)) {
     $code = (Get-Content $args[0]) -join "`n"
-    $index = $args[1]
+    $index = $code.Length
 
     $ret = [System.Management.Automation.CommandCompletion]::MapStringInputToParsedInput([String] $code, [Int] $index)
     $completeWords = [System.Management.Automation.CommandCompletion]::CompleteInput($ret.Item1, $ret.Item2, $ret.Item3, $null).CompletionMatches | Select-Object CompletionText, ResultType, ToolTip

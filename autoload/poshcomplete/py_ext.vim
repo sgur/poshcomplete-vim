@@ -9,8 +9,8 @@ sys.path.remove(scr_path)
 EOF
 endfunction
 
-function! poshcomplete#py_ext#complete(path, index)
-    python getcandidates.complete(vim.eval("a:path"), vim.eval("a:index"))
+function! poshcomplete#py_ext#complete(path)
+    python getcandidates.complete(vim.eval("a:path"))
     return []
 endfunction
 

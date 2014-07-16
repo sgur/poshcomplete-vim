@@ -5,7 +5,7 @@ function! poshcomplete#CompleteCommand(findstart, base)
         let line = getline('.')
         let start = col('.') - 1
 
-        while (start > 0 && line[start - 1] =~ '[[:alpha:]$]' || line[start - 1] =~ '-')
+        while (start > 0 && line[start - 1] =~ '[[:alpha:]-$]')
             let start -= 1
         endwhile
 
@@ -18,10 +18,10 @@ function! poshcomplete#CompleteCommand(findstart, base)
             return []
         endif
 
-        let [path, index] = s:prepare_buffer(currentline)
+        let path = s:prepare_buffer(currentline)
 
         if has('python')
-            return poshcomplete#py_ext#complete(path, index)
+            return poshcomplete#py_ext#complete(path)
         else
             return s:complete(path, index)
         endif
@@ -30,10 +30,8 @@ endfunction
 
 function! s:prepare_buffer(line)
     let temp_path = tempname()
-    let prev_lines = getline(1, line('.')-1)
-    let cursor_bytes = strlen(join(prev_lines, "\n")) + strlen(a:line) + 1
-    call writefile(prev_lines + [a:line], temp_path)
-    return [temp_path, cursor_bytes]
+    call writefile(add(getline(1, line('.')-1), a:line), temp_path)
+    return temp_path
 endfunction
 
 function! s:complete(path, index)
